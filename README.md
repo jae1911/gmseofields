@@ -4,10 +4,10 @@ A simple plugin to add SEO fields to Prestashop pages (with Smartblog/Betterblog
 
 Supported versions:
   - 1.6.*
+  - Thirtybees Support (100%)
 
 Work in progress:
-  - [ ] Thirtybees support
-  - [ ] Zero bugs
+- [ ] Zero bugs
 
 ### Support me!
 

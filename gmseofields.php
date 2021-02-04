@@ -177,11 +177,10 @@ class GmSeoFields extends Module
                 break;
 
             case 'details':
-                $canonical = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-                $postId = Tools::getValue('id_post');
-                $currentBlogUrl = str_replace('.html', '', smartblog::GetSmartBlogLink('smartblog')) . '/';
+                // $canonical = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-                $currentPost = str_replace($currentBlogUrl, '', $canonical);
+                $postId = Tools::getValue('id_post');
+                // $currentBlogUrl = str_replace('.html', '', smartblog::GetSmartBlogLink('smartblog')) . '/';
 
                 $listDescs = Db::getInstance()->executeS('SELECT * FROM ' . _DB_PREFIX_ . 'smart_blog_post_lang WHERE id_smart_blog_post = \'' . $postId . '\'');
 
@@ -191,6 +190,14 @@ class GmSeoFields extends Module
                     if($siteLangs['id_lang'] == Configuration::get('PS_LANG_DEFAULT'))
                         $defaultLang = '/' . $siteLangs['iso_code'] . '/';
                 }
+
+                foreach($listDescs as $postData) {
+                    if($postData['id_lang'] == Context::getContext()->language->id) {
+                        $postSlug = $postId . '_' . $postData['link_rewrite'];
+                    }
+                }
+
+                $canonical = str_replace('.html', '', smartblog::GetSmartBlogLink('smartblog')) . '/' . $postSlug . '.html';
 
                 $langs = array_unique($langs);
 
@@ -202,13 +209,13 @@ class GmSeoFields extends Module
                     foreach(Language::getLanguages(true, $this->context->shop->id) as $siteLangs) {
 
                         if($siteLangs['iso_code'] == $defaultLang) {
-                            $rew = str_replace($currentPost, $blogDesc['link_rewrite'], $canonical . '.html');
+                            $rew = str_replace($postSlug, $blogDesc['link_rewrite'], $canonical);
                         }
                         
                         if($blogDesc['id_lang'] == $siteLangs['id_lang']) {
                             $linkBuild = str_replace($langs, '/' . $siteLangs['iso_code'] . '/', '<link rel="alternate" href="' . $canonical . '" hreflang="' . $siteLangs['iso_code'] . '">');
 
-                            $linkBuild = str_replace($currentPost, $postId . '_' . $blogDesc['link_rewrite'] . '.html', $linkBuild);
+                            $linkBuild = str_replace($postSlug, $postId . '_' . $blogDesc['link_rewrite'], $linkBuild);
 
                             $hreflang[] = $linkBuild;
                         }

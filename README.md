@@ -6,5 +6,5 @@ Supported versions:
   - 1.6.*
 
 Work in progress:
-  [ ] Thirtybees support
-  [ ] Zero bugs
+  - [ ] Thirtybees support
+  - [ ] Zero bugs

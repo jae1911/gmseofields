@@ -52,7 +52,7 @@ class GmSeoFields extends Module
         $this->name = 'gmseofields';
         $this->tab = 'front_office_features';
         $this->version = '1.0.1';
-        $this->author = 'GreenMouseStudio.com';
+        $this->author = 'Jae';
         $this->bootstrap = true;
         $this->need_instance = 0;
 

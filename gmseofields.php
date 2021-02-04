@@ -187,8 +187,10 @@ class GmSeoFields extends Module
                 foreach(Language::getLanguages(true, $this->context->shop->id) as $siteLangs) {
                     $langs[] = '/' . $siteLangs['iso_code'] . '/';
 
-                    if($siteLangs['id_lang'] == Configuration::get('PS_LANG_DEFAULT'))
+                    if($siteLangs['id_lang'] == Configuration::get('PS_LANG_DEFAULT')) {
                         $defaultLang = '/' . $siteLangs['iso_code'] . '/';
+                        $defaultLangIso = $siteLangs['iso_code'];
+                    }
                 }
 
                 foreach($listDescs as $postData) {
@@ -207,15 +209,15 @@ class GmSeoFields extends Module
 
                 foreach($listDescs as $blogDesc) {
                     foreach(Language::getLanguages(true, $this->context->shop->id) as $siteLangs) {
-
-                        if($siteLangs['iso_code'] == $defaultLang) {
-                            $rew = str_replace($postSlug, $blogDesc['link_rewrite'], $canonical);
-                        }
                         
                         if($blogDesc['id_lang'] == $siteLangs['id_lang']) {
                             $linkBuild = str_replace($langs, '/' . $siteLangs['iso_code'] . '/', '<link rel="alternate" href="' . $canonical . '" hreflang="' . $siteLangs['iso_code'] . '">');
 
                             $linkBuild = str_replace($postSlug, $postId . '_' . $blogDesc['link_rewrite'], $linkBuild);
+
+                            if($siteLangs['iso_code'] == $defaultLangIso) {
+                                $rew = str_replace($postSlug, $postId . '_' . $blogDesc['link_rewrite'], $canonical);
+                            }
 
                             $hreflang[] = $linkBuild;
                         }
@@ -241,6 +243,8 @@ class GmSeoFields extends Module
                 $content .= "$lang\n";
             }
         }
+
+        $content .= '<h1>' . $defaultLang . '</h1>';
 
         return $content;
     }

@@ -80,12 +80,8 @@ class GmSeoFields extends Module
             return;
         }
 
-        // return $this->setSeoBlog();
-
-        // if (isset($this->context->controller->php_self)) {
         $this->php_self = Tools::getValue('controller');
         return $this->getSeoFields();
-        // }
     }
 
     private function handleNobots()
@@ -113,7 +109,6 @@ class GmSeoFields extends Module
             case 'category':
                 $idCategory = (int) Tools::getValue('id_category');
                 $content .= $this->getRelPrevNext('category', $idCategory);
-                // $canonical = $this->context->link->getCategoryLink((int) $idCategory);
                 $canonical = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
                 $hreflang = $this->getHrefLang('category', $idCategory, $languages, $defaultLang);
                 break;

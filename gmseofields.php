@@ -244,8 +244,6 @@ class GmSeoFields extends Module
             }
         }
 
-        $content .= '<h1>' . $defaultLang . '</h1>';
-
         return $content;
     }
 

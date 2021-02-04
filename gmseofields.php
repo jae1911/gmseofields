@@ -4,6 +4,7 @@
  *
  * @package   gmseofields
  * @author    Dariusz Tryba (contact@greenmousestudio.com), based on Faktiva and ThirtyBees
+ * @maintainer Jae <jae@jae.moe>
  * @copyright Copyright (c) Green Mouse Studio (http://www.greenmousestudio.com)
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */

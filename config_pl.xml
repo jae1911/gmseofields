@@ -4,7 +4,7 @@
 	<displayName><![CDATA[SEO Fields]]></displayName>
 	<version><![CDATA[1.0.0]]></version>
 	<description><![CDATA[Adds canonical, hreflang, prev, next and noindex tags to the header]]></description>
-	<author><![CDATA[GreenMouseStudio.com]]></author>
+	<author><![CDATA[Jae]]></author>
 	<tab><![CDATA[front_office_features]]></tab>
 	<is_configurable>1</is_configurable>
 	<need_instance>0</need_instance>

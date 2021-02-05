@@ -5,6 +5,6 @@ compress:
     - mv .temp/ gmseofields/
     - zip -r gmseofields.zip gmseofields/
   artifacts:
-    - paths:
+    paths:
       - gmseofields.zip
     expire_in: 4 week

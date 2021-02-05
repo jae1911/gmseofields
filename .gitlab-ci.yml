@@ -1,0 +1,8 @@
+compress:
+  script:
+    - mkdir .temp
+    - cp -r * .temp/
+    - mv .temp/ gmseofields/
+    - zip -r gmseofields.zip gmseofields/
+  artifacts:
+    - gmseofields.zip

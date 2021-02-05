@@ -1,0 +1,23 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  zipme:
+    runs-on: ubuntu-latest
+    steps:
+     - run: mkdir .temp
+     - run: cp -r * .temp/
+     - run: mv .temp/ gmseofields/
+     - run: zip -r gmseofields.zip gmseofields/
+     - uses: actions/upload-artifact@v2
+       with:
+         name: gmseofields
+         path: gmseofields.zip

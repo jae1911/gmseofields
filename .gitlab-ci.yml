@@ -3,6 +3,7 @@ compress:
     - mkdir .temp
     - cp -r * .temp/
     - mv .temp/ gmseofields/
+    - apk add zip
     - zip -r gmseofields.zip gmseofields/
   artifacts:
     paths:

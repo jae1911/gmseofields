@@ -167,7 +167,7 @@ class GmSeoFields extends Module
                 break;
 
             case 'details':
-                if(!Configuration::get('smartblogurlpattern')) {
+                if(Configuration::get('smartblogurlpattern') != 1) {
                     $postId = Tools::getValue('id_post');
                 } else {
                     $SmartBlog = new smartblog();
@@ -188,7 +188,7 @@ class GmSeoFields extends Module
 
                 foreach ($listDescs as $postData) {
                     if ($postData['id_lang'] == Context::getContext()->language->id) {
-                        if(!Configuration::get('smartblogurlpattern')) {
+                        if(Configuration::get('smartblogurlpattern') != 1) {
                             $postSlug = $postId . '_' . $postData['link_rewrite'];
                         } else {
                             $postSlug = Tools::getValue('slug');
@@ -204,14 +204,14 @@ class GmSeoFields extends Module
                         if ($blogDesc['id_lang'] == $siteLangs['id_lang']) {
                             $linkBuild = str_replace($langs, '/' . $siteLangs['iso_code'] . '/', '<link rel="alternate" href="' . $canonical . '" hreflang="' . $siteLangs['iso_code'] . '">');
 
-                            if(!Configuration::get('smartblogurlpattern')) {
+                            if(Configuration::get('smartblogurlpattern') != 1) {
                                 $linkBuild = str_replace($postSlug, $postId . '_' . $blogDesc['link_rewrite'], $linkBuild);
                             } else {
                                 $linkBuild = str_replace($postSlug, $blogDesc['link_rewrite'], $linkBuild);
                             }
                             
                             if ($siteLangs['iso_code'] == $defaultLangIso) {
-                                if(!Configuration::get('smartblogurlpattern')) {
+                                if(Configuration::get('smartblogurlpattern') != 1) {
                                     $rew = str_replace($postSlug, $postId . '_' . $blogDesc['link_rewrite'], $canonical);
                                 } else {
                                     $rew = str_replace($postSlug, $blogDesc['link_rewrite'], $canonical);
@@ -268,7 +268,7 @@ class GmSeoFields extends Module
                 $content .= "$lang\n";
             }
         }
-        
+
         return $content;
     }
 

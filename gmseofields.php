@@ -167,7 +167,14 @@ class GmSeoFields extends Module
                 break;
 
             case 'details':
-                $postId = Tools::getValue('id_post');
+                if(!Configuration::get('smartblogurlpattern')) {
+                    $postId = Tools::getValue('id_post');
+                } else {
+                    $SmartBlog = new smartblog();
+                    $slug = Tools::getValue('slug');
+                    $postId = $SmartBlog->slug2id($slug);
+                }
+
                 $listDescs = Db::getInstance()->executeS('SELECT * FROM ' . _DB_PREFIX_ . 'smart_blog_post_lang WHERE id_smart_blog_post = \'' . $postId . '\'');
 
                 foreach (Language::getLanguages(true, $this->context->shop->id) as $siteLangs) {
@@ -181,7 +188,11 @@ class GmSeoFields extends Module
 
                 foreach ($listDescs as $postData) {
                     if ($postData['id_lang'] == Context::getContext()->language->id) {
-                        $postSlug = $postId . '_' . $postData['link_rewrite'];
+                        if(!Configuration::get('smartblogurlpattern')) {
+                            $postSlug = $postId . '_' . $postData['link_rewrite'];
+                        } else {
+                            $postSlug = Tools::getValue('slug');
+                        }
                     }
                 }
 
@@ -193,10 +204,18 @@ class GmSeoFields extends Module
                         if ($blogDesc['id_lang'] == $siteLangs['id_lang']) {
                             $linkBuild = str_replace($langs, '/' . $siteLangs['iso_code'] . '/', '<link rel="alternate" href="' . $canonical . '" hreflang="' . $siteLangs['iso_code'] . '">');
 
-                            $linkBuild = str_replace($postSlug, $postId . '_' . $blogDesc['link_rewrite'], $linkBuild);
-
+                            if(!Configuration::get('smartblogurlpattern')) {
+                                $linkBuild = str_replace($postSlug, $postId . '_' . $blogDesc['link_rewrite'], $linkBuild);
+                            } else {
+                                $linkBuild = str_replace($postSlug, $blogDesc['link_rewrite'], $linkBuild);
+                            }
+                            
                             if ($siteLangs['iso_code'] == $defaultLangIso) {
-                                $rew = str_replace($postSlug, $postId . '_' . $blogDesc['link_rewrite'], $canonical);
+                                if(!Configuration::get('smartblogurlpattern')) {
+                                    $rew = str_replace($postSlug, $postId . '_' . $blogDesc['link_rewrite'], $canonical);
+                                } else {
+                                    $rew = str_replace($postSlug, $blogDesc['link_rewrite'], $canonical);
+                                }  
                             }
 
                             $hreflang[] = $linkBuild;
@@ -209,7 +228,6 @@ class GmSeoFields extends Module
                 break;
             
             case 'category':
-                $idCategory = (int) Tools::getValue('id_category');
                 $canonical = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
                 foreach(Language::getLanguages(true, $this->context->shop->id) as $siteLangs) {
@@ -235,8 +253,6 @@ class GmSeoFields extends Module
 
                 $hreflang[] = str_replace($langs, $defaultLang, '<link rel="alternate" href="' . $rew . '" hreflang="x-default">');
                 $hreflang = array_unique($hreflang);
-
-                // $hreflang = $this->getHrefLang('category', $idCategory, $languages, $defaultLang);
                 break;
 
             default:
@@ -252,7 +268,7 @@ class GmSeoFields extends Module
                 $content .= "$lang\n";
             }
         }
-
+        
         return $content;
     }
 

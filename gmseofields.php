@@ -106,13 +106,6 @@ class GmSeoFields extends Module
                 $hreflang = $this->getHrefLang('product', $idProduct, $languages, $defaultLang);
                 break;
 
-            case 'category':
-                $idCategory = (int) Tools::getValue('id_category');
-                $content .= $this->getRelPrevNext('category', $idCategory);
-                $canonical = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-                $hreflang = $this->getHrefLang('category', $idCategory, $languages, $defaultLang);
-                break;
-
             case 'manufacturer':
                 $idManufacturer = (int) Tools::getValue('id_manufacturer');
                 $content .= $this->getRelPrevNext('manufacturer', $idManufacturer);
@@ -213,6 +206,37 @@ class GmSeoFields extends Module
 
                 $hreflang[] = str_replace($langs, $defaultLang, '<link rel="alternate" href="' . $rew . '" hreflang="x-default">');
                 $hreflang = array_unique($hreflang);
+                break;
+            
+            case 'category':
+                $idCategory = (int) Tools::getValue('id_category');
+                $canonical = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+                foreach(Language::getLanguages(true, $this->context->shop->id) as $siteLangs) {
+                    $langs[] = '/' . $siteLangs['iso_code'] . '/';
+
+                    if ($siteLangs['id_lang'] == Configuration::get('PS_LANG_DEFAULT')) {
+                        $defaultLang = '/' . $siteLangs['iso_code'];
+                        $defaultLangIso = $siteLangs['iso_code'];
+                    }
+                }
+
+                $langs = array_unique($langs);
+
+                foreach(Language::getLanguages(true, $this->context->shop->id) as $siteLangs) {
+                    $linkBuild = str_replace($langs, '/' . $siteLangs['iso_code'] . '/', '<link rel="alternate" href="' . $canonical . '" hreflang="' . $siteLangs['iso_code'] . '">');
+
+                    if ($siteLangs['iso_code'] == $defaultLangIso) {
+                        $rew = str_replace($postSlug, $blogDesc['link_rewrite'], $canonical);
+                    }
+
+                    $hreflang[] = $linkBuild;
+                }
+
+                $hreflang[] = str_replace($langs, $defaultLang, '<link rel="alternate" href="' . $rew . '" hreflang="x-default">');
+                $hreflang = array_unique($hreflang);
+
+                // $hreflang = $this->getHrefLang('category', $idCategory, $languages, $defaultLang);
                 break;
 
             default:

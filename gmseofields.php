@@ -315,9 +315,9 @@ class GmSeoFields extends Module
             }
 
             // append page number
-            if ($p == Tools::getValue('p')) {
-                $lnk .= "?p=$p";
-            }
+            // if (isset($p) && $p == Tools::getValue('p')) {
+            //     $lnk .= "?p=$p";
+            // }
 
             $links[] = '<link rel="alternate" href="' . $lnk . '" hreflang="' . $lang['language_code'] . '">';
             if ($lang['id_lang'] == $idLangDefault) {

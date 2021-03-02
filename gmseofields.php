@@ -315,7 +315,7 @@ class GmSeoFields extends Module
             }
 
             // append page number
-            if ($p = Tools::getValue('p')) {
+            if ($p == Tools::getValue('p')) {
                 $lnk .= "?p=$p";
             }
 

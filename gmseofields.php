@@ -3,7 +3,7 @@
  * Adds canonical, hreflang and prev next tags to the header
  *
  * @package   gmseofields
- * @author    Jae (jae@jae.moe)
+ * @author    Jae (me@jae.fi)
  * @copyright Copyright (c) Jae
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */

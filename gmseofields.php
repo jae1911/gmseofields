@@ -145,8 +145,6 @@ class GmSeoFields extends Module
 
                 $firstShop = Db::getInstance()->executeS('SELECT * FROM ' . _DB_PREFIX_ . 'shop_url INNER JOIN ' . _DB_PREFIX_ . 'cms_shop ON ' . _DB_PREFIX_ . 'cms_shop.id_cms = \'' . $idCms . '\' AND ' . _DB_PREFIX_ . 'shop_url.id_shop = ' . _DB_PREFIX_ . 'cms_shop.id_shop');
 
-                // Bonne chance
-
                 if ($idCms) {
                     if ($refNumber > 1) {
                         $canonical = str_replace($shops, $firstShop[0]['virtual_uri'], $this->context->link->getCMSLink((int) $idCms));
@@ -209,13 +207,13 @@ class GmSeoFields extends Module
                             } else {
                                 $linkBuild = str_replace($postSlug, $blogDesc['link_rewrite'], $linkBuild);
                             }
-                            
+
                             if ($siteLangs['iso_code'] == $defaultLangIso) {
                                 if(Configuration::get('smartblogurlpattern') != 1) {
                                     $rew = str_replace($postSlug, $postId . '_' . $blogDesc['link_rewrite'], $canonical);
                                 } else {
                                     $rew = str_replace($postSlug, $blogDesc['link_rewrite'], $canonical);
-                                }  
+                                }
                             }
 
                             $hreflang[] = $linkBuild;
@@ -226,7 +224,7 @@ class GmSeoFields extends Module
                 $hreflang[] = str_replace($langs, $defaultLang, '<link rel="alternate" href="' . $rew . '" hreflang="x-default">');
                 $hreflang = array_unique($hreflang);
                 break;
-            
+
             case 'category':
                 $canonical = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
@@ -313,11 +311,6 @@ class GmSeoFields extends Module
                     $lnk = $this->context->link->getPageLink($entity, null, $lang['id_lang']);
                     break;
             }
-
-            // append page number
-            // if (isset($p) && $p == Tools::getValue('p')) {
-            //     $lnk .= "?p=$p";
-            // }
 
             $links[] = '<link rel="alternate" href="' . $lnk . '" hreflang="' . $lang['language_code'] . '">';
             if ($lang['id_lang'] == $idLangDefault) {

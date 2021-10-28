@@ -226,7 +226,7 @@ class GmSeoFields extends Module
                 break;
 
             case 'category':
-                $canonical = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+                $canonical = 'https://' . _PS_BASE_URL_ . $_SERVER['REQUEST_URI'];
 
                 foreach(Language::getLanguages(true, $this->context->shop->id) as $siteLangs) {
                     $langs[] = '/' . $siteLangs['iso_code'] . '/';
@@ -254,7 +254,7 @@ class GmSeoFields extends Module
                 break;
 
             default:
-                $canonical = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+                $canonical = 'https://' . _PS_BASE_URL_ . $_SERVER['REQUEST_URI'];
                 $hreflang = $this->getHrefLang($this->php_self, 0, $languages, $defaultLang);
                 break;
         }

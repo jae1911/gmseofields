@@ -1,4 +1,8 @@
-# Seo fields for prestashop
+# READ HERE FIRST PLEASE
+
+Don't use Prestashop, piece of shit of a software.
+
+## Seo fields for prestashop
 
 A simple plugin to add SEO fields to Prestashop pages (with Smartblog/Betterblog support now).
 
